@@ -1,4 +1,4 @@
-package com.example.mdmuktadir.diamu;
+package bd.com.diamu;
 
 import org.junit.Test;
 
