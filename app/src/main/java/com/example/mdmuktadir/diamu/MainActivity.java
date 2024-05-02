@@ -7,6 +7,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import bd.com.diamu.R;
+
 public class MainActivity extends AppCompatActivity {
     public WebView webView;
 

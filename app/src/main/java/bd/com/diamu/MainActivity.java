@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import bd.com.diamu.constant.Constant;
 import bd.com.diamu.databinding.ActivityMainBinding;
 
+
 @SuppressLint({"SetJavaScriptEnabled", "ObsoleteSdkInt"})
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -41,8 +42,13 @@ public class MainActivity extends AppCompatActivity {
         binding.webView.getSettings().setBuiltInZoomControls(true);
         binding.webView.getSettings().setDisplayZoomControls(false);
         binding.webView.getSettings().setSupportZoom(true);
-        binding.webView.getSettings().setAllowFileAccessFromFileURLs(true);
-        binding.webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            binding.webView.getSettings().setAllowFileAccessFromFileURLs(true);
+            binding.webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            binding.webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+        }
         binding.webView.getSettings().setBlockNetworkImage(false);
         binding.webView.getSettings().setDatabaseEnabled(true);
         binding.webView.getSettings().setSupportMultipleWindows(true);
@@ -51,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         binding.webView.getSettings().setLoadsImagesAutomatically(true);
         binding.webView.getSettings().setAllowContentAccess(true);
         binding.webView.getSettings().setAllowFileAccess(true);
-        binding.webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
         binding.webView.getSettings().setPluginState(WebSettings.PluginState.ON);
         binding.webView.clearHistory();
         binding.webView.setWebChromeClient(new WebChromeClient() {

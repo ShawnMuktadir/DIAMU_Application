@@ -16,7 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.example.mdmuktadir.diamu'
+
+    viewBinding {
+        enabled true
+    }
+    namespace 'bd.com.diamu'
 }
 
 dependencies {
