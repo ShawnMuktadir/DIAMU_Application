@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import bd.com.diamu.constant.Constant;
 import bd.com.diamu.databinding.ActivityMainBinding;
-
 
 @SuppressLint({"SetJavaScriptEnabled", "ObsoleteSdkInt"})
 public class MainActivity extends AppCompatActivity {
@@ -57,13 +55,11 @@ public class MainActivity extends AppCompatActivity {
         binding.webView.getSettings().setLoadsImagesAutomatically(true);
         binding.webView.getSettings().setAllowContentAccess(true);
         binding.webView.getSettings().setAllowFileAccess(true);
-        binding.webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            binding.webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        }
         binding.webView.clearHistory();
         binding.webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-
-            }
         });
 
         WebSettings webSettings = binding.webView.getSettings();

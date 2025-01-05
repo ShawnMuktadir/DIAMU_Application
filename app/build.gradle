@@ -1,33 +1,89 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    namespace 'bd.com.diamu'
+    compileSdk 35
+
+    def versionMajor = 1
+    def versionMinor = 1
+    def versionPatch = 1
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.mdmuktadir.diamu"
-        minSdkVersion 15
-        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
+        minSdk 21
+        targetSdk 33
+        versionCode versionMajor + versionMinor + versionPatch
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        multiDexEnabled true
+        vectorDrawables {
+            useSupportLibrary true
+        }
     }
-    buildTypes {
+
+    signingConfigs {
         release {
+            /*storeFile file("/$project.rootDir/locc-smart-parking-fiber-at-home.jks")
+            storePassword STORE_PASSWORD
+            keyAlias "locc-smart-parking"
+            keyPassword KEY_PASSWORD*/
+        }
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix '-DEBUG'
+            debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
     viewBinding {
         enabled true
     }
-    namespace 'bd.com.diamu'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'com.android.support:multidex:2.0.1'
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
