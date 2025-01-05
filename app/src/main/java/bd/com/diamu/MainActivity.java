@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,13 +61,30 @@ public class MainActivity extends AppCompatActivity {
         }
         binding.webView.clearHistory();
         binding.webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                // Log.d(TAG + " 185", "Load Status: " + progress);
+                if (progress == 100) {
+                    binding.idIVLogo.setVisibility(View.GONE);
+                }
+            }
         });
 
         WebSettings webSettings = binding.webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         //code for opening the application
-        binding.webView.setWebViewClient(new WebViewClient());
+        binding.webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                binding.idIVLogo.setVisibility(View.GONE);
+                binding.webView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        // Initially hide the WebView and show the ImageView
+        binding.webView.setVisibility(View.GONE);
+        binding.idIVLogo.setVisibility(View.VISIBLE);
         binding.webView.loadUrl(Constant.DIAMU_WEB_URL);
     }
 
