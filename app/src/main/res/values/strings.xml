@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DIAMU</string>
+    <string name="app_name_stag">DIAMU (Staging)</string>
 </resources>

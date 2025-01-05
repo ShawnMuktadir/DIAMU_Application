@@ -13,27 +13,28 @@ android {
         }
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
-        applicationId "com.example.mdmuktadir.diamu"
-        versionCode 1
-        versionName "1.0"
+        applicationId "bd.com.diamu"
         minSdk 21
         targetSdk 33
         versionCode versionMajor + versionMinor + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         multiDexEnabled true
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
         release {
-            /*storeFile file("/$project.rootDir/locc-smart-parking-fiber-at-home.jks")
+            storeFile file("/$project.rootDir/diamu-shopping.jks")
             storePassword STORE_PASSWORD
-            keyAlias "locc-smart-parking"
-            keyPassword KEY_PASSWORD*/
+            keyAlias "diamu-shopping"
+            keyPassword KEY_PASSWORD
         }
     }
 
@@ -51,6 +52,42 @@ android {
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    ext {
+        APP_NAME = "@string/app_name"
+        APP_NAME_STAG = "@string/app_name_stag"
+    }
+
+    flavorDimensions = ["version"]
+
+    productFlavors {
+        stag {
+            dimension "version"
+            versionNameSuffix "-STAG"
+            manifestPlaceholders = [appName: APP_NAME_STAG]
+            buildConfigField "String", "BASE_URL", '\"https://diamu.com.bd/\"'
+        }
+
+        prod {
+            dimension "version"
+            versionNameSuffix "-PROD"
+            manifestPlaceholders = [appName: APP_NAME]
+            buildConfigField "String", "BASE_URL", '\"https://diamu.com.bd/\"'
+        }
+    }
+
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            def project = "DIAMU-SHOPPING-APP"
+            def separator = "-"
+            def version = variant.versionName
+            def date = new Date()
+            def formattedDate = date.format('yyyy-MM-dd-HH-mm')
+            def newApkName = "$project$separator$version$separator${formattedDate}.apk"
+
+            outputFileName = new File(newApkName)
         }
     }
 

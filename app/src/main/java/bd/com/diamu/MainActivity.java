@@ -13,7 +13,6 @@ import android.webkit.WebViewClient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import bd.com.diamu.constant.Constant;
 import bd.com.diamu.databinding.ActivityMainBinding;
 
 @SuppressLint({"SetJavaScriptEnabled", "ObsoleteSdkInt"})
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         // Initially hide the WebView and show the ImageView
         binding.webView.setVisibility(View.GONE);
         binding.idIVLogo.setVisibility(View.VISIBLE);
-        binding.webView.loadUrl(Constant.DIAMU_WEB_URL);
+        binding.webView.loadUrl(BuildConfig.BASE_URL);
     }
 
     @Override
